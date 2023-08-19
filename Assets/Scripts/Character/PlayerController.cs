@@ -43,8 +43,8 @@ public class PlayerController : MonoBehaviour
     private CharacterController _characterController;
 
     private DefaultInput _inputActions;
-    private Vector2 _input_Movement;
-    [HideInInspector] public Vector2 _input_View;
+    [HideInInspector] public Vector2 input_Movement;
+    [HideInInspector] public Vector2 input_View;
 
     private Vector3 _newCameraRotation;
     private Vector3 _newPlayerRotation;
@@ -61,8 +61,8 @@ public class PlayerController : MonoBehaviour
         _inputActions = new DefaultInput();
         _characterController = GetComponent<CharacterController>();
 
-        _inputActions.Character.Movement.performed += e => _input_Movement = e.ReadValue<Vector2>();
-        _inputActions.Character.View.performed += e => _input_View = e.ReadValue<Vector2>();
+        _inputActions.Character.Movement.performed += e => input_Movement = e.ReadValue<Vector2>();
+        _inputActions.Character.View.performed += e => input_View = e.ReadValue<Vector2>();
         _inputActions.Character.Jump.performed += e => Jump();
 
         _inputActions.Character.Crouch.performed += e => Crouch();
@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
-        if (_input_Movement.y <= 0.2f)
+        if (input_Movement.y <= 0.2f)
             _isSprinting = false;
 
         float verticalSpeed = playerSettings.walkingForwardSpeed;
@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
 
         _newMovementSpeed = Vector3.SmoothDamp(
             _newMovementSpeed,
-            new Vector3(horizontalSpeed * _input_Movement.x * Time.deltaTime, 0, verticalSpeed * _input_Movement.y * Time.deltaTime),
+            new Vector3(horizontalSpeed * input_Movement.x * Time.deltaTime, 0, verticalSpeed * input_Movement.y * Time.deltaTime),
             ref _newMovementVelocity,
             _characterController.isGrounded ? playerSettings.movementSmoothing : playerSettings.fallingSmoothing
         );
@@ -152,11 +152,11 @@ public class PlayerController : MonoBehaviour
     private void HandleView()
     {
         // Horizontal rotation => rotation on the Y axis
-        _newPlayerRotation.y += (playerSettings.viewXInverted ? -1 : 1) * _input_View.x * playerSettings.viewXSensitivity * Time.deltaTime;
+        _newPlayerRotation.y += (playerSettings.viewXInverted ? -1 : 1) * input_View.x * playerSettings.viewXSensitivity * Time.deltaTime;
         transform.localRotation = Quaternion.Euler(_newPlayerRotation);
 
         // Vertical camera rotation => rotation on the X axis
-        _newCameraRotation.x += (playerSettings.viewYInverted ? 1 : -1) * _input_View.y * playerSettings.viewYSensitivity * Time.deltaTime;
+        _newCameraRotation.x += (playerSettings.viewYInverted ? 1 : -1) * input_View.y * playerSettings.viewYSensitivity * Time.deltaTime;
         _newCameraRotation.x = Mathf.Clamp(_newCameraRotation.x, viewClampYMin, viewClampYMax);
 
         cameraHolder.localRotation = Quaternion.Euler(_newCameraRotation);
@@ -243,7 +243,7 @@ public class PlayerController : MonoBehaviour
 
     private void ToggleSprint()
     {
-        if (_input_Movement.y <= 0.2f)
+        if (input_Movement.y <= 0.2f)
         {
             _isSprinting = false;
             return;

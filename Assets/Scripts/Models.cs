@@ -61,7 +61,7 @@ public static class Models
     [Serializable]
     public class WeaponSettingsModel
     {
-        [Header("Sway")]
+        [Header("Weapon Sway")]
         public float swayAmount;
         public bool swayYInverted;
         public bool swayXInverted;
@@ -69,6 +69,14 @@ public static class Models
         public float swayResetSmoothing;
         public float swayClampX;
         public float swayClampY;
+        public float swayClampZ;
+
+        [Header("Weapon Movement Sway")]
+        public float movementSwayX;
+        public float movementSwayY;
+        public bool movementSwayYInverted;
+        public bool movementSwayXInverted;
+        public float movementSwaySmoothing;
     }
 
     #endregion
