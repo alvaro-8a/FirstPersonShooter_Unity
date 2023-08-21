@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using static Models;
 
@@ -14,8 +15,6 @@ public class WeaponController : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private WeaponSettingsModel settings;
-
-
 
     private PlayerController _characterController;
 
@@ -36,6 +35,17 @@ public class WeaponController : MonoBehaviour
     private bool _isGroundedTrigger;
     private float _fallingDelay;
 
+    [Header("Weapon Sway / Breathing")]
+    [SerializeField] private Transform weaponSwayObject;
+
+    [SerializeField] private float swayAmountA = 1;
+    [SerializeField] private float swayAmountB = 2;
+    [SerializeField] private float swayScale = 600;
+    [SerializeField] private float swayLerpSpeed = 14;
+
+    [SerializeField] private float swayTime;
+    [SerializeField] private Vector3 swayPosition;
+
     private void Start()
     {
         _newWeaponRotation = transform.localRotation.eulerAngles;
@@ -48,8 +58,7 @@ public class WeaponController : MonoBehaviour
 
         HandleWeaponRotation();
         SetWeaponAnimations();
-
-
+        HandleWeaponSway();
     }
 
     public void Initialize(PlayerController characterController)
@@ -113,5 +122,26 @@ public class WeaponController : MonoBehaviour
 
         weaponAnimator.SetBool(IS_SPRINTING, _characterController.isSprinting);
         weaponAnimator.SetFloat(WEAPON_ANIMATION_SPEED, _characterController.weaponAnimationSpeed);
+    }
+
+    private void HandleWeaponSway()
+    {
+        var targetPos = LissajousCurve(swayTime, swayAmountA, swayAmountB) / swayScale;
+
+        swayPosition = Vector3.Lerp(swayPosition, targetPos, Time.smoothDeltaTime * swayLerpSpeed);
+        swayTime += Time.deltaTime;
+
+        if (swayTime > 6.3f)
+        {
+            swayTime = 0;
+        }
+
+        weaponSwayObject.localPosition = swayPosition;
+    }
+
+    // Breathing / Sway curve
+    private Vector3 LissajousCurve(float time, float a, float b)
+    {
+        return new Vector3(Mathf.Sin(time), a * Mathf.Sin(b * time + Mathf.PI));
     }
 }
