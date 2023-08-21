@@ -3,9 +3,19 @@ using static Models;
 
 public class WeaponController : MonoBehaviour
 {
+    private const string JUMP = "Jump";
+    private const string LAND = "Land";
+    private const string FALLING = "Falling";
+    private const string IS_SPRINTING = "IsSprinting";
+    private const string WEAPON_ANIMATION_SPEED = "WeaponAnimationSpeed";
+
+    [Header("References")]
+    [SerializeField] private Animator weaponAnimator;
 
     [Header("Settings")]
     [SerializeField] private WeaponSettingsModel settings;
+
+
 
     private PlayerController _characterController;
 
@@ -23,6 +33,9 @@ public class WeaponController : MonoBehaviour
     private Vector3 _targetWeaponMovementRotation;
     private Vector3 _targetWeaponMovementRotationVelocity;
 
+    private bool _isGroundedTrigger;
+    private float _fallingDelay;
+
     private void Start()
     {
         _newWeaponRotation = transform.localRotation.eulerAngles;
@@ -33,6 +46,26 @@ public class WeaponController : MonoBehaviour
         if (!_isInitialized)
             return;
 
+        HandleWeaponRotation();
+        SetWeaponAnimations();
+
+
+    }
+
+    public void Initialize(PlayerController characterController)
+    {
+        _characterController = characterController;
+        _isInitialized = true;
+    }
+
+    public void TriggerJump()
+    {
+        _isGroundedTrigger = false;
+        weaponAnimator.SetTrigger(JUMP);
+    }
+
+    private void HandleWeaponRotation()
+    {
         // Weapon rotation when there's mouse movement
         _targetWeaponRotation.y += settings.swayAmount * (settings.swayXInverted ? -1 : 1) * _characterController.input_View.x * Time.deltaTime;
         _targetWeaponRotation.x += settings.swayAmount * (settings.swayYInverted ? 1 : -1) * _characterController.input_View.y * Time.deltaTime;
@@ -54,9 +87,31 @@ public class WeaponController : MonoBehaviour
         transform.localRotation = Quaternion.Euler(_newWeaponRotation + _newWeaponMovementRotation);
     }
 
-    public void Initialize(PlayerController characterController)
+    private void SetWeaponAnimations()
     {
-        _characterController = characterController;
-        _isInitialized = true;
+        if (_isGroundedTrigger)
+        {
+            _fallingDelay = 0;
+        }
+        else
+        {
+            _fallingDelay += Time.deltaTime;
+        }
+
+        if (_characterController.isGrounded && !_isGroundedTrigger && _fallingDelay > 0.1f)
+        {
+            Debug.Log("Trigger Land");
+            weaponAnimator.SetTrigger(LAND);
+            _isGroundedTrigger = true;
+        }
+        else if (!_characterController.isGrounded && _isGroundedTrigger)
+        {
+            Debug.Log("Trigger Falling");
+            weaponAnimator.SetTrigger(FALLING);
+            _isGroundedTrigger = false;
+        }
+
+        weaponAnimator.SetBool(IS_SPRINTING, _characterController.isSprinting);
+        weaponAnimator.SetFloat(WEAPON_ANIMATION_SPEED, _characterController.weaponAnimationSpeed);
     }
 }
