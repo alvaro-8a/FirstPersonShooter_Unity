@@ -43,12 +43,28 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private float swayScale = 600;
     [SerializeField] private float swayLerpSpeed = 14;
 
-    [SerializeField] private float swayTime;
-    [SerializeField] private Vector3 swayPosition;
+    private float swayTime;
+    private Vector3 swayPosition;
+
+    [Header("Sights")]
+    [SerializeField] private Transform sightTarget;
+    [SerializeField] private float sightOffset;
+    [SerializeField] private float aimingInTime;
+
+    [HideInInspector] public bool isAimingIn;
+
+    private Vector3 _weaponSwayPosition;
+    private Vector3 _weaponSwayPositionVelocity;
 
     private void Start()
     {
         _newWeaponRotation = transform.localRotation.eulerAngles;
+    }
+
+    public void Initialize(PlayerController characterController)
+    {
+        _characterController = characterController;
+        _isInitialized = true;
     }
 
     private void Update()
@@ -59,12 +75,23 @@ public class WeaponController : MonoBehaviour
         HandleWeaponRotation();
         SetWeaponAnimations();
         HandleWeaponSway();
+        HandleWeaponAimingIn();
     }
 
-    public void Initialize(PlayerController characterController)
+    private void HandleWeaponAimingIn()
     {
-        _characterController = characterController;
-        _isInitialized = true;
+        var targetPos = transform.position;
+
+        if (isAimingIn)
+        {
+            targetPos = _characterController.cameraHolder.transform.position
+                        + (weaponSwayObject.position - sightTarget.position)
+                        + (_characterController.cameraHolder.transform.forward * sightOffset);
+        }
+
+        _weaponSwayPosition = weaponSwayObject.transform.position;
+        _weaponSwayPosition = Vector3.SmoothDamp(_weaponSwayPosition, targetPos, ref _weaponSwayPositionVelocity, aimingInTime);
+        weaponSwayObject.transform.position = _weaponSwayPosition;
     }
 
     public void TriggerJump()
@@ -136,7 +163,7 @@ public class WeaponController : MonoBehaviour
             swayTime = 0;
         }
 
-        weaponSwayObject.localPosition = swayPosition;
+        // weaponSwayObject.localPosition = swayPosition;
     }
 
     // Breathing / Sway curve

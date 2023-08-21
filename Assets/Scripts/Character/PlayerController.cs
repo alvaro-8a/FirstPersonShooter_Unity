@@ -7,7 +7,7 @@ using static Models;
 public class PlayerController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Transform cameraHolder;
+    public Transform cameraHolder;
     [SerializeField] private Transform feetTransform;
 
     [Header("Settings")]
@@ -61,6 +61,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool isGrounded;
     [HideInInspector] public bool isFalling;
 
+    [Header("Aiming In")]
+    [SerializeField] private bool isAimingIn;
+
     #region - Awake -
 
     private void Awake()
@@ -77,6 +80,9 @@ public class PlayerController : MonoBehaviour
 
         _inputActions.Character.Sprint.performed += e => ToggleSprint();
         _inputActions.Character.SprintReleased.performed += e => StopSprint();
+
+        _inputActions.Weapon.Fire2Pressed.performed += e => AimingInPressed();
+        _inputActions.Weapon.Fire2Released.performed += e => AimingInReleased();
 
         _inputActions.Enable();
 
@@ -104,6 +110,46 @@ public class PlayerController : MonoBehaviour
         HandleView();
         HandleJump();
         HandleStance();
+        HandleAimingIn();
+    }
+
+    #endregion
+
+    #region - Aiming In -
+
+    private void AimingInPressed()
+    {
+        isAimingIn = true;
+    }
+
+    private void AimingInReleased()
+    {
+        isAimingIn = false;
+    }
+
+    private void HandleAimingIn()
+    {
+        if (!currentWeapon)
+        {
+            return;
+        }
+
+        currentWeapon.isAimingIn = isAimingIn;
+    }
+
+    #endregion
+
+    #region - IsFalling / IsGrounded -
+
+    private void SetIsGrounded()
+    {
+        isGrounded = Physics.CheckSphere(feetTransform.position, playerSettings.isGroundedRadius, groundMask);
+    }
+
+    private void SetIsFalling()
+    {
+        isFalling = !isGrounded && _characterController.velocity.magnitude >= playerSettings.isFallingSpeed;
+
     }
 
     #endregion
@@ -291,21 +337,6 @@ public class PlayerController : MonoBehaviour
         {
             isSprinting = false;
         }
-    }
-
-    #endregion
-
-    #region - IsFalling / IsGrounded -
-
-    private void SetIsGrounded()
-    {
-        isGrounded = Physics.CheckSphere(feetTransform.position, playerSettings.isGroundedRadius, groundMask);
-    }
-
-    private void SetIsFalling()
-    {
-        isFalling = !isGrounded && _characterController.velocity.magnitude >= playerSettings.isFallingSpeed;
-
     }
 
     #endregion
