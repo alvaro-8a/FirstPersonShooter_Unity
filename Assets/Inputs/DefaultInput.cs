@@ -89,6 +89,42 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeanLeftPressed"",
+                    ""type"": ""Button"",
+                    ""id"": ""77ff21cf-c097-47b8-ae1b-1a1d8a95985e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeanRightPressed"",
+                    ""type"": ""Button"",
+                    ""id"": ""d072a575-0a55-4e4b-895b-557e21eadc3e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeanLeftReleased"",
+                    ""type"": ""Button"",
+                    ""id"": ""a2a9a068-4f75-4eb6-869a-1ce0246533d6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeanRightReleased"",
+                    ""type"": ""Button"",
+                    ""id"": ""45c3ce62-73b9-42a1-a304-8266cfd7ac55"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -300,6 +336,94 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
                     ""action"": ""SprintReleased"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b069b15e-fb26-4f77-a0e5-0fcf23f7eab7"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeanLeftPressed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8edc214a-dd96-49c0-ad74-578798f50ddf"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeanLeftPressed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3dd33fc4-54ad-48bc-bcb1-80043dce9651"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeanRightPressed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea95c714-4f3d-4e4c-a1a4-de5546902eb9"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeanRightPressed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37a0e59c-241b-48af-95dd-6b8658dcbaa6"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeanLeftReleased"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2dacdab0-49bc-4e5d-97b5-72e16992b353"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeanLeftReleased"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c29fe809-a50d-46a1-b17c-c20641f8a9b3"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeanRightReleased"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a4bc55c-078e-44a0-ae1a-f9d978620275"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeanRightReleased"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -363,6 +487,10 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
         m_Character_Prone = m_Character.FindAction("Prone", throwIfNotFound: true);
         m_Character_Sprint = m_Character.FindAction("Sprint", throwIfNotFound: true);
         m_Character_SprintReleased = m_Character.FindAction("SprintReleased", throwIfNotFound: true);
+        m_Character_LeanLeftPressed = m_Character.FindAction("LeanLeftPressed", throwIfNotFound: true);
+        m_Character_LeanRightPressed = m_Character.FindAction("LeanRightPressed", throwIfNotFound: true);
+        m_Character_LeanLeftReleased = m_Character.FindAction("LeanLeftReleased", throwIfNotFound: true);
+        m_Character_LeanRightReleased = m_Character.FindAction("LeanRightReleased", throwIfNotFound: true);
         // Weapon
         m_Weapon = asset.FindActionMap("Weapon", throwIfNotFound: true);
         m_Weapon_Fire2Pressed = m_Weapon.FindAction("Fire2Pressed", throwIfNotFound: true);
@@ -435,6 +563,10 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Prone;
     private readonly InputAction m_Character_Sprint;
     private readonly InputAction m_Character_SprintReleased;
+    private readonly InputAction m_Character_LeanLeftPressed;
+    private readonly InputAction m_Character_LeanRightPressed;
+    private readonly InputAction m_Character_LeanLeftReleased;
+    private readonly InputAction m_Character_LeanRightReleased;
     public struct CharacterActions
     {
         private @DefaultInput m_Wrapper;
@@ -446,6 +578,10 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
         public InputAction @Prone => m_Wrapper.m_Character_Prone;
         public InputAction @Sprint => m_Wrapper.m_Character_Sprint;
         public InputAction @SprintReleased => m_Wrapper.m_Character_SprintReleased;
+        public InputAction @LeanLeftPressed => m_Wrapper.m_Character_LeanLeftPressed;
+        public InputAction @LeanRightPressed => m_Wrapper.m_Character_LeanRightPressed;
+        public InputAction @LeanLeftReleased => m_Wrapper.m_Character_LeanLeftReleased;
+        public InputAction @LeanRightReleased => m_Wrapper.m_Character_LeanRightReleased;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -476,6 +612,18 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
             @SprintReleased.started += instance.OnSprintReleased;
             @SprintReleased.performed += instance.OnSprintReleased;
             @SprintReleased.canceled += instance.OnSprintReleased;
+            @LeanLeftPressed.started += instance.OnLeanLeftPressed;
+            @LeanLeftPressed.performed += instance.OnLeanLeftPressed;
+            @LeanLeftPressed.canceled += instance.OnLeanLeftPressed;
+            @LeanRightPressed.started += instance.OnLeanRightPressed;
+            @LeanRightPressed.performed += instance.OnLeanRightPressed;
+            @LeanRightPressed.canceled += instance.OnLeanRightPressed;
+            @LeanLeftReleased.started += instance.OnLeanLeftReleased;
+            @LeanLeftReleased.performed += instance.OnLeanLeftReleased;
+            @LeanLeftReleased.canceled += instance.OnLeanLeftReleased;
+            @LeanRightReleased.started += instance.OnLeanRightReleased;
+            @LeanRightReleased.performed += instance.OnLeanRightReleased;
+            @LeanRightReleased.canceled += instance.OnLeanRightReleased;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -501,6 +649,18 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
             @SprintReleased.started -= instance.OnSprintReleased;
             @SprintReleased.performed -= instance.OnSprintReleased;
             @SprintReleased.canceled -= instance.OnSprintReleased;
+            @LeanLeftPressed.started -= instance.OnLeanLeftPressed;
+            @LeanLeftPressed.performed -= instance.OnLeanLeftPressed;
+            @LeanLeftPressed.canceled -= instance.OnLeanLeftPressed;
+            @LeanRightPressed.started -= instance.OnLeanRightPressed;
+            @LeanRightPressed.performed -= instance.OnLeanRightPressed;
+            @LeanRightPressed.canceled -= instance.OnLeanRightPressed;
+            @LeanLeftReleased.started -= instance.OnLeanLeftReleased;
+            @LeanLeftReleased.performed -= instance.OnLeanLeftReleased;
+            @LeanLeftReleased.canceled -= instance.OnLeanLeftReleased;
+            @LeanRightReleased.started -= instance.OnLeanRightReleased;
+            @LeanRightReleased.performed -= instance.OnLeanRightReleased;
+            @LeanRightReleased.canceled -= instance.OnLeanRightReleased;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -581,6 +741,10 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
         void OnProne(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnSprintReleased(InputAction.CallbackContext context);
+        void OnLeanLeftPressed(InputAction.CallbackContext context);
+        void OnLeanRightPressed(InputAction.CallbackContext context);
+        void OnLeanLeftReleased(InputAction.CallbackContext context);
+        void OnLeanRightReleased(InputAction.CallbackContext context);
     }
     public interface IWeaponActions
     {

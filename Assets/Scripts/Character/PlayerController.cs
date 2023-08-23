@@ -61,6 +61,17 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool isGrounded;
     [HideInInspector] public bool isFalling;
 
+    [Header("Leaning")]
+    [SerializeField] private Transform leanPivot;
+    [SerializeField] private float leanAngle;
+    [SerializeField] private float leanSmoothing;
+    private float _currentLean;
+    private float _targetLean;
+    private float _leanVelocity;
+
+    private bool _isLeaningLeft;
+    private bool _isLeaningRight;
+
     [Header("Aiming In")]
     [SerializeField] private bool isAimingIn;
 
@@ -83,6 +94,12 @@ public class PlayerController : MonoBehaviour
 
         _inputActions.Weapon.Fire2Pressed.performed += e => AimingInPressed();
         _inputActions.Weapon.Fire2Released.performed += e => AimingInReleased();
+
+        _inputActions.Character.LeanLeftPressed.performed += e => ToggleLeanLeft();
+        _inputActions.Character.LeanLeftReleased.performed += e => StopLean();
+
+        _inputActions.Character.LeanRightPressed.performed += e => ToggleLeanRight();
+        _inputActions.Character.LeanRightReleased.performed += e => StopLean();
 
         _inputActions.Enable();
 
@@ -110,6 +127,7 @@ public class PlayerController : MonoBehaviour
         HandleView();
         HandleJump();
         HandleStance();
+        HandleLeaning();
         HandleAimingIn();
     }
 
@@ -244,6 +262,65 @@ public class PlayerController : MonoBehaviour
         _newCameraRotation.x = Mathf.Clamp(_newCameraRotation.x, viewClampYMin, viewClampYMax);
 
         cameraHolder.localRotation = Quaternion.Euler(_newCameraRotation);
+    }
+
+    #endregion
+
+    #region - Leaning -
+
+    private void ToggleLeanLeft()
+    {
+        if (_isLeaningRight)
+        {
+            _isLeaningLeft = false;
+            _isLeaningRight = false;
+            return;
+        }
+
+        _isLeaningLeft = !_isLeaningLeft;
+        _isLeaningRight = false;
+    }
+
+    private void ToggleLeanRight()
+    {
+        if (_isLeaningLeft)
+        {
+            _isLeaningLeft = false;
+            _isLeaningRight = false;
+            return;
+        }
+
+        _isLeaningLeft = false;
+        _isLeaningRight = !_isLeaningRight;
+    }
+
+    private void StopLean()
+    {
+        if (playerSettings.leaningHold)
+        {
+            _isLeaningLeft = false;
+            _isLeaningRight = false;
+        }
+    }
+
+    private void HandleLeaning()
+    {
+        if(_isLeaningLeft)
+        {
+            _targetLean = leanAngle;
+        }
+        else if(_isLeaningRight)
+        {
+            _targetLean = -leanAngle;
+        }
+        else
+        {
+            _targetLean = 0;
+        }
+
+        _currentLean = Mathf.SmoothDamp(_currentLean, _targetLean, ref _leanVelocity, leanSmoothing);
+
+        leanPivot.localRotation = Quaternion.Euler(0, 0, _currentLean);
     }
 
     #endregion

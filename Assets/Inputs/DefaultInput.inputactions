@@ -67,6 +67,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LeanLeftPressed",
+                    "type": "Button",
+                    "id": "77ff21cf-c097-47b8-ae1b-1a1d8a95985e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeanRightPressed",
+                    "type": "Button",
+                    "id": "d072a575-0a55-4e4b-895b-557e21eadc3e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeanLeftReleased",
+                    "type": "Button",
+                    "id": "a2a9a068-4f75-4eb6-869a-1ce0246533d6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeanRightReleased",
+                    "type": "Button",
+                    "id": "45c3ce62-73b9-42a1-a304-8266cfd7ac55",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -276,6 +312,94 @@
                     "processors": "",
                     "groups": "",
                     "action": "SprintReleased",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b069b15e-fb26-4f77-a0e5-0fcf23f7eab7",
+                    "path": "<Keyboard>/q",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeanLeftPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8edc214a-dd96-49c0-ad74-578798f50ddf",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeanLeftPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3dd33fc4-54ad-48bc-bcb1-80043dce9651",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeanRightPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ea95c714-4f3d-4e4c-a1a4-de5546902eb9",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeanRightPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "37a0e59c-241b-48af-95dd-6b8658dcbaa6",
+                    "path": "<Keyboard>/q",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeanLeftReleased",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2dacdab0-49bc-4e5d-97b5-72e16992b353",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeanLeftReleased",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c29fe809-a50d-46a1-b17c-c20641f8a9b3",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeanRightReleased",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3a4bc55c-078e-44a0-ae1a-f9d978620275",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeanRightReleased",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

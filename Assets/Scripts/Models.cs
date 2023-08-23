@@ -26,6 +26,7 @@ public static class Models
 
         [Header("Movement Settings")]
         public bool sprintingHold;
+        public bool leaningHold;
         public float movementSmoothing;
 
         [Header("Movement - Running")]
