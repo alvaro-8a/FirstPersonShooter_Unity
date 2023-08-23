@@ -170,22 +170,7 @@ public class PlayerController : MonoBehaviour
         }
 
         /* EFFECTORS */
-        if (!isGrounded)
-        {
-            playerSettings.speedEffector = playerSettings.fallingSpeedEffector;
-        }
-        else if (playerStance == PlayerStance.Crouch)
-        {
-            playerSettings.speedEffector = playerSettings.crouchSpeedEffector;
-        }
-        else if (playerStance == PlayerStance.Prone)
-        {
-            playerSettings.speedEffector = playerSettings.proneSpeedEffector;
-        }
-        else
-        {
-            playerSettings.speedEffector = 1;
-        }
+        HandleSpeedEffectors();
 
         weaponAnimationSpeed = _characterController.velocity.magnitude / (playerSettings.walkingForwardSpeed * playerSettings.speedEffector);
 
@@ -218,14 +203,44 @@ public class PlayerController : MonoBehaviour
         _characterController.Move(movementSpeed);
     }
 
+    private void HandleSpeedEffectors()
+    {
+        if (!isGrounded)
+        {
+            playerSettings.speedEffector = playerSettings.fallingSpeedEffector;
+        }
+        else if (playerStance == PlayerStance.Crouch)
+        {
+            playerSettings.speedEffector = playerSettings.crouchSpeedEffector;
+        }
+        else if (playerStance == PlayerStance.Prone)
+        {
+            playerSettings.speedEffector = playerSettings.proneSpeedEffector;
+        }
+        else if (isAimingIn)
+        {
+            playerSettings.speedEffector = playerSettings.aimingSpeedEffector;
+        }
+        else
+        {
+            playerSettings.speedEffector = 1;
+        }
+    }
+
     private void HandleView()
     {
+        float aimingSensitivityEffector = isAimingIn ? playerSettings.aimingSensitivityEffector : 1;
+
         // Horizontal rotation => rotation on the Y axis
-        _newPlayerRotation.y += (playerSettings.viewXInverted ? -1 : 1) * input_View.x * playerSettings.viewXSensitivity * Time.deltaTime;
+        _newPlayerRotation.y += playerSettings.viewXSensitivity * aimingSensitivityEffector
+                                * (playerSettings.viewXInverted ? -1 : 1) * input_View.x
+                                * Time.deltaTime;
         transform.localRotation = Quaternion.Euler(_newPlayerRotation);
 
         // Vertical camera rotation => rotation on the X axis
-        _newCameraRotation.x += (playerSettings.viewYInverted ? 1 : -1) * input_View.y * playerSettings.viewYSensitivity * Time.deltaTime;
+        _newCameraRotation.x += playerSettings.viewYSensitivity * aimingSensitivityEffector
+                                * (playerSettings.viewYInverted ? 1 : -1) * input_View.y
+                                * Time.deltaTime;
         _newCameraRotation.x = Mathf.Clamp(_newCameraRotation.x, viewClampYMin, viewClampYMax);
 
         cameraHolder.localRotation = Quaternion.Euler(_newCameraRotation);
