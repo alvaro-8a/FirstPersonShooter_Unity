@@ -9,6 +9,7 @@
 * Movement smoothing settings
 * Stance settings (Stand, Crouch, Prone)
 * Sway settings
-* Breathing settings
 * Aiming settings
+* Breathing settings
 * Speed effectors settings
+* Leaning settings
