@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("References")]
     public Transform cameraHolder;
+    public Transform camera;
     [SerializeField] private Transform feetTransform;
 
     [Header("Settings")]
@@ -270,12 +271,12 @@ public class PlayerController : MonoBehaviour
 
     private void ToggleLeanLeft()
     {
-        if (_isLeaningRight)
-        {
-            _isLeaningLeft = false;
-            _isLeaningRight = false;
-            return;
-        }
+        //if (_isLeaningRight)
+        //{
+        //    _isLeaningLeft = false;
+        //    _isLeaningRight = false;
+        //    return;
+        //}
 
         _isLeaningLeft = !_isLeaningLeft;
         _isLeaningRight = false;
@@ -283,12 +284,12 @@ public class PlayerController : MonoBehaviour
 
     private void ToggleLeanRight()
     {
-        if (_isLeaningLeft)
-        {
-            _isLeaningLeft = false;
-            _isLeaningRight = false;
-            return;
-        }
+        //if (_isLeaningLeft)
+        //{
+        //    _isLeaningLeft = false;
+        //    _isLeaningRight = false;
+        //    return;
+        //}
 
         _isLeaningLeft = false;
         _isLeaningRight = !_isLeaningRight;
