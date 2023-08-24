@@ -93,14 +93,17 @@ public class PlayerController : MonoBehaviour
         _inputActions.Character.Sprint.performed += e => ToggleSprint();
         _inputActions.Character.SprintReleased.performed += e => StopSprint();
 
-        _inputActions.Weapon.Fire2Pressed.performed += e => AimingInPressed();
-        _inputActions.Weapon.Fire2Released.performed += e => AimingInReleased();
-
         _inputActions.Character.LeanLeftPressed.performed += e => ToggleLeanLeft();
         _inputActions.Character.LeanLeftReleased.performed += e => StopLean();
 
         _inputActions.Character.LeanRightPressed.performed += e => ToggleLeanRight();
         _inputActions.Character.LeanRightReleased.performed += e => StopLean();
+
+        _inputActions.Weapon.Fire2Pressed.performed += e => AimingInPressed();
+        _inputActions.Weapon.Fire2Released.performed += e => AimingInReleased();
+
+        _inputActions.Weapon.Fire1Pressed.performed += e => ShootingPressed();
+        _inputActions.Weapon.Fire1Released.performed += e => ShootingReleased();
 
         _inputActions.Enable();
 
@@ -130,6 +133,26 @@ public class PlayerController : MonoBehaviour
         HandleStance();
         HandleLeaning();
         HandleAimingIn();
+    }
+
+    #endregion
+
+    #region - Shooting -
+
+    private void ShootingPressed()
+    {
+        if(currentWeapon)
+        {
+            currentWeapon.isShooting = true;
+        }
+    }
+
+    private void ShootingReleased()
+    {
+        if (currentWeapon)
+        {
+            currentWeapon.isShooting = false;
+        }
     }
 
     #endregion
@@ -413,6 +436,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region - Sprinting -
+    
     private void ToggleSprint()
     {
         if (input_Movement.y <= 0.2f)

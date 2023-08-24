@@ -448,6 +448,24 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fire1Pressed"",
+                    ""type"": ""Button"",
+                    ""id"": ""10c30cfe-d2bc-4059-a142-f16db140666c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fire1Released"",
+                    ""type"": ""Button"",
+                    ""id"": ""68a8f45a-fa72-4c6b-b4ce-dbb70fbaca5e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -470,6 +488,28 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Fire2Released"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b1e0ea1-6c3d-4506-8b3e-7fe8f8efebc8"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire1Pressed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5b629e6-408c-4ff7-bde1-d0c1d59f91a9"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire1Released"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -495,6 +535,8 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
         m_Weapon = asset.FindActionMap("Weapon", throwIfNotFound: true);
         m_Weapon_Fire2Pressed = m_Weapon.FindAction("Fire2Pressed", throwIfNotFound: true);
         m_Weapon_Fire2Released = m_Weapon.FindAction("Fire2Released", throwIfNotFound: true);
+        m_Weapon_Fire1Pressed = m_Weapon.FindAction("Fire1Pressed", throwIfNotFound: true);
+        m_Weapon_Fire1Released = m_Weapon.FindAction("Fire1Released", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -684,12 +726,16 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
     private List<IWeaponActions> m_WeaponActionsCallbackInterfaces = new List<IWeaponActions>();
     private readonly InputAction m_Weapon_Fire2Pressed;
     private readonly InputAction m_Weapon_Fire2Released;
+    private readonly InputAction m_Weapon_Fire1Pressed;
+    private readonly InputAction m_Weapon_Fire1Released;
     public struct WeaponActions
     {
         private @DefaultInput m_Wrapper;
         public WeaponActions(@DefaultInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Fire2Pressed => m_Wrapper.m_Weapon_Fire2Pressed;
         public InputAction @Fire2Released => m_Wrapper.m_Weapon_Fire2Released;
+        public InputAction @Fire1Pressed => m_Wrapper.m_Weapon_Fire1Pressed;
+        public InputAction @Fire1Released => m_Wrapper.m_Weapon_Fire1Released;
         public InputActionMap Get() { return m_Wrapper.m_Weapon; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -705,6 +751,12 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
             @Fire2Released.started += instance.OnFire2Released;
             @Fire2Released.performed += instance.OnFire2Released;
             @Fire2Released.canceled += instance.OnFire2Released;
+            @Fire1Pressed.started += instance.OnFire1Pressed;
+            @Fire1Pressed.performed += instance.OnFire1Pressed;
+            @Fire1Pressed.canceled += instance.OnFire1Pressed;
+            @Fire1Released.started += instance.OnFire1Released;
+            @Fire1Released.performed += instance.OnFire1Released;
+            @Fire1Released.canceled += instance.OnFire1Released;
         }
 
         private void UnregisterCallbacks(IWeaponActions instance)
@@ -715,6 +767,12 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
             @Fire2Released.started -= instance.OnFire2Released;
             @Fire2Released.performed -= instance.OnFire2Released;
             @Fire2Released.canceled -= instance.OnFire2Released;
+            @Fire1Pressed.started -= instance.OnFire1Pressed;
+            @Fire1Pressed.performed -= instance.OnFire1Pressed;
+            @Fire1Pressed.canceled -= instance.OnFire1Pressed;
+            @Fire1Released.started -= instance.OnFire1Released;
+            @Fire1Released.performed -= instance.OnFire1Released;
+            @Fire1Released.canceled -= instance.OnFire1Released;
         }
 
         public void RemoveCallbacks(IWeaponActions instance)
@@ -750,5 +808,7 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
     {
         void OnFire2Pressed(InputAction.CallbackContext context);
         void OnFire2Released(InputAction.CallbackContext context);
+        void OnFire1Pressed(InputAction.CallbackContext context);
+        void OnFire1Released(InputAction.CallbackContext context);
     }
 }

@@ -321,7 +321,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 259218132}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.388, y: 1.5, z: -0.752}
+  m_LocalPosition: {x: -2.388, y: 1.532, z: -0.752}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -503,6 +503,37 @@ Transform:
   m_Children:
   - {fileID: 1664814515}
   m_Father: {fileID: 953034382}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &676479656
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 676479657}
+  m_Layer: 6
+  m_Name: BulletSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &676479657
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676479656}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0843, z: -0.007}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1664814515}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &712684159
@@ -702,6 +733,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponAnimator: {fileID: 1664814516}
+  bulletPrefab: {fileID: 7699582240594595484, guid: a39156e89417d0e478415df6100283e1,
+    type: 3}
+  bulletSpawn: {fileID: 676479657}
   settings:
     swayAmount: 4
     swayYInverted: 0
@@ -725,6 +759,10 @@ MonoBehaviour:
   sightOffset: 0.15
   aimingInTime: 0.1
   isAimingIn: 0
+  rateOfFire: 0
+  allowedFireTypes: 00000000
+  currentFireType: 0
+  isShooting: 0
 --- !u!1 &1236995366
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,7 +1363,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh29190
+  m_Name: pb_Mesh29194
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -1514,6 +1552,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 543450652816031362}
+  - {fileID: 676479657}
   - {fileID: 1845671173}
   m_Father: {fileID: 306769064}
   m_RootOrder: -1

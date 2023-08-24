@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static Models;
 
@@ -12,6 +14,8 @@ public class WeaponController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Animator weaponAnimator;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform bulletSpawn;
 
     [Header("Settings")]
     [SerializeField] private WeaponSettingsModel settings;
@@ -56,25 +60,22 @@ public class WeaponController : MonoBehaviour
     private Vector3 _weaponSwayPosition;
     private Vector3 _weaponSwayPositionVelocity;
 
-    #region - Start -
+    [Header("Shooting")]
+    [SerializeField] private float rateOfFire;
+    [SerializeField] private List<WeaponFireType> allowedFireTypes;
+    private float _currentFireRate;
+    [SerializeField] private WeaponFireType currentFireType;
+    [HideInInspector] public bool isShooting;
+
+
+    #region - Start / Update -
 
     private void Start()
     {
         _newWeaponRotation = transform.localRotation.eulerAngles;
+
+        currentFireType = allowedFireTypes.First();
     }
-
-    #endregion
-
-    #region - Initialize -
-    public void Initialize(PlayerController characterController)
-    {
-        _characterController = characterController;
-        _isInitialized = true;
-    }
-
-    #endregion
-
-    #region - Update -
 
     private void Update()
     {
@@ -85,6 +86,15 @@ public class WeaponController : MonoBehaviour
         SetWeaponAnimations();
         HandleWeaponSway();
         HandleWeaponAimingIn();
+        HandleShooting();
+    }
+    #endregion
+
+    #region - Initialize -
+    public void Initialize(PlayerController characterController)
+    {
+        _characterController = characterController;
+        _isInitialized = true;
     }
 
     #endregion
@@ -141,6 +151,7 @@ public class WeaponController : MonoBehaviour
     #endregion
 
     #region - Weapon Animations -
+    
     public void TriggerJump()
     {
         _isGroundedTrigger = false;
@@ -160,13 +171,11 @@ public class WeaponController : MonoBehaviour
 
         if (_characterController.isGrounded && !_isGroundedTrigger && _fallingDelay > 0.1f)
         {
-            Debug.Log("Trigger Land");
             weaponAnimator.SetTrigger(LAND);
             _isGroundedTrigger = true;
         }
         else if (!_characterController.isGrounded && _isGroundedTrigger)
         {
-            Debug.Log("Trigger Falling");
             weaponAnimator.SetTrigger(FALLING);
             _isGroundedTrigger = false;
         }
@@ -196,6 +205,31 @@ public class WeaponController : MonoBehaviour
     private Vector3 LissajousCurve(float time, float a, float b)
     {
         return new Vector3(Mathf.Sin(time), a * Mathf.Sin(b * time + Mathf.PI));
+    }
+
+    #endregion
+
+    #region - Shooting -
+
+    private void HandleShooting()
+    {
+        if(isShooting)
+        {
+            Shoot();
+
+            if(currentFireType == WeaponFireType.SemiAuto)
+            {
+                isShooting = false;
+            }
+        }
+    }
+
+
+    private void Shoot()
+    {
+        var bullet = Instantiate(bulletPrefab, bulletSpawn);
+
+        // Load bullet settings
     }
 
     #endregion
