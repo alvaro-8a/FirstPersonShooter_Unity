@@ -105,6 +105,8 @@ public class PlayerController : MonoBehaviour
         _inputActions.Weapon.Fire1Pressed.performed += e => ShootingPressed();
         _inputActions.Weapon.Fire1Released.performed += e => ShootingReleased();
 
+        _inputActions.Weapon.Reload.performed += e => ReloadPressed();
+
         _inputActions.Enable();
 
         _newCameraRotation = cameraHolder.localRotation.eulerAngles;
@@ -151,8 +153,18 @@ public class PlayerController : MonoBehaviour
     {
         if (currentWeapon)
         {
-            currentWeapon.isShooting = false;
+            currentWeapon.isReloading = false;
         }
+    }
+
+    #endregion
+
+    #region - Shooting -
+
+    private void ReloadPressed()
+    {
+        if (!currentWeapon.isReloading)
+            currentWeapon.isReloading = true;
     }
 
     #endregion

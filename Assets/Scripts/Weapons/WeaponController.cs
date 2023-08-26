@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,6 +15,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private Animator weaponAnimator;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform bulletSpawn;
+    [SerializeField] private GameObject muzzleFlash;
 
     [Header("Settings")]
     [SerializeField] private WeaponSettingsModel settings;
@@ -61,14 +61,29 @@ public class WeaponController : MonoBehaviour
     private Vector3 _weaponSwayPositionVelocity;
 
     [Header("Shooting")]
-    [SerializeField] private float rateOfFire;
     [SerializeField] private List<WeaponFireType> allowedFireTypes;
-    private float _currentFireRate;
     [SerializeField] private WeaponFireType currentFireType;
     [HideInInspector] public bool isShooting;
+    [HideInInspector] public bool isReloading;
 
+    private float _currentFireRate;
+    
+    private int _bulletsLeft;
+    private int _bulletsShot; 
 
-    #region - Start / Update -
+    private bool _isReadyToShoot;
+    private bool _isReloading;
+
+    // Bug fixing
+    public bool canInvoke = true;
+
+    #region - Awake / Start / Update -
+
+    private void Awake()
+    {
+        _bulletsLeft = settings.magazineSize;
+        _isReadyToShoot = true;
+    }
 
     private void Start()
     {
@@ -87,6 +102,7 @@ public class WeaponController : MonoBehaviour
         HandleWeaponSway();
         HandleWeaponAimingIn();
         HandleShooting();
+        HandleReloading();
     }
     #endregion
 
@@ -213,8 +229,10 @@ public class WeaponController : MonoBehaviour
 
     private void HandleShooting()
     {
-        if(isShooting)
+        if(isShooting && _isReadyToShoot && !isReloading && _bulletsLeft > 0)
         {
+            _bulletsShot = 0;
+
             Shoot();
 
             if(currentFireType == WeaponFireType.SemiAuto)
@@ -224,12 +242,98 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-
     private void Shoot()
     {
-        var bullet = Instantiate(bulletPrefab, bulletSpawn);
 
-        // Load bullet settings
+        _isReadyToShoot = false;
+
+        // Find exact hit position with raycast
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0));
+        RaycastHit hit;
+
+        // Check if ray hits something
+        Vector3 targetPoint;
+        if (Physics.Raycast(ray, out hit))
+            targetPoint = hit.point;
+        else
+            targetPoint = ray.GetPoint(7);
+
+        // Calculate direction from bulletSpawn to targetPoint
+        Vector3 diretionWithoutSpread = targetPoint - bulletSpawn.position;
+
+        // Calculate spread
+        float x = Random.Range(-settings.spread, settings.spread);
+        float y = Random.Range(-settings.spread, settings.spread);
+
+        // Calculate new direction with spread
+        Vector3 directionWithSpread = diretionWithoutSpread + new Vector3(x, y, 0);
+
+        var currentBullet = Instantiate(bulletPrefab, bulletSpawn.position, transform.rotation);
+        // Rotate bullet to shoot direction
+        currentBullet.transform.forward = directionWithSpread.normalized;
+
+        // Add force to bullet
+        currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * settings.shootForce, ForceMode.Impulse);
+
+        // For graneades 
+        //currentBullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.up * settings.upwardForce, ForceMode.Impulse);
+
+        if (muzzleFlash != null)
+        {
+            var muzzleFlashObject = Instantiate(muzzleFlash, bulletSpawn);
+            Destroy(muzzleFlashObject, 1f);
+        }
+
+        _bulletsLeft--;
+        _bulletsShot++;
+
+        // Invoke resetShot function
+        if(canInvoke)
+        {
+            Invoke("ResetShot", settings.timeBetweenShooting);
+            canInvoke = false;
+        }
+
+        // If more than one bulletPerShot repeat shoot function
+        if(_bulletsLeft < settings.bulletsPerShot && _bulletsLeft > 0)
+        {
+            Invoke("Shoot", settings.timeBetweenShots);
+        }
+    }
+
+    private void ResetShot()
+    {
+        _isReadyToShoot = true;
+        canInvoke = true;
+    }
+
+    #endregion
+
+    #region - Reloading -
+
+    private void HandleReloading()
+    {
+        // Reload with input
+        if (isReloading && _bulletsLeft < settings.magazineSize)
+            Reload();
+        else
+            isReloading = false;
+
+        // Reload automatically when trying to shoot without ammo left
+        if (_isReadyToShoot && isShooting && !isReloading && _bulletsLeft <= 0)
+            Reload();
+    }
+
+    private void Reload()
+    {
+        //_isReloading = true;
+        Invoke("ReloadFinished", settings.reloadTime);
+    }
+
+    private void ReloadFinished()
+    {
+        _bulletsLeft = settings.magazineSize;
+        _isReloading = false;
     }
 
     #endregion

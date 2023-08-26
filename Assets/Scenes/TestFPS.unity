@@ -529,7 +529,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 676479656}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0843, z: -0.007}
+  m_LocalPosition: {x: 0, y: 0.0837, z: 0.3855}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -736,6 +736,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7699582240594595484, guid: a39156e89417d0e478415df6100283e1,
     type: 3}
   bulletSpawn: {fileID: 676479657}
+  muzzleFlash: {fileID: 7806229830023140176, guid: 65f190dd46d94ba4e861ba7ac22e111b,
+    type: 3}
   settings:
     swayAmount: 4
     swayYInverted: 0
@@ -750,6 +752,15 @@ MonoBehaviour:
     movementSwayYInverted: 1
     movementSwayXInverted: 0
     movementSwaySmoothing: 0.13
+    fireHold: 0
+    shootForce: 300
+    upwardForce: 0
+    timeBetweenShooting: 0.1
+    timeBetweenShots: 0
+    spread: 0
+    reloadTime: 1.5
+    magazineSize: 30
+    bulletsPerShot: 1
   weaponSwayObject: {fileID: 306769064}
   swayAmountA: 1
   swayAmountB: 2
@@ -759,10 +770,11 @@ MonoBehaviour:
   sightOffset: 0.15
   aimingInTime: 0.1
   isAimingIn: 0
-  rateOfFire: 0
   allowedFireTypes: 00000000
   currentFireType: 0
   isShooting: 0
+  isReloading: 0
+  canInvoke: 1
 --- !u!1 &1236995366
 GameObject:
   m_ObjectHideFlags: 0
@@ -1363,7 +1375,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh29194
+  m_Name: pb_Mesh29208
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2

@@ -91,6 +91,18 @@ public static class Models
         public bool movementSwayYInverted;
         public bool movementSwayXInverted;
         public float movementSwaySmoothing;
+
+        [Header("Weapon Shooting Settings")]
+        public bool fireHold;
+        public float shootForce;
+        public float upwardForce;
+        public float timeBetweenShooting; // Fire Rate
+        public float timeBetweenShots; 
+        public float spread;
+        public float reloadTime;
+        public int magazineSize;
+        public int bulletsPerShot; // For Shotguns
+
     }
 
     #endregion
