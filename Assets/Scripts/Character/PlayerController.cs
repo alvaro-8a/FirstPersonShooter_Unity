@@ -76,12 +76,20 @@ public class PlayerController : MonoBehaviour
     [Header("Aiming In")]
     [SerializeField] private bool isAimingIn;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip footstepsSound;
+    [SerializeField] private float footstepsInterval;
+
+    private AudioSource _audioSource;
+    private float _footstepsTimer = 0;
+
     #region - Awake -
 
     private void Awake()
     {
         _inputActions = new DefaultInput();
         _characterController = GetComponent<CharacterController>();
+        _audioSource = GetComponent<AudioSource>();
 
         _inputActions.Character.Movement.performed += e => input_Movement = e.ReadValue<Vector2>();
         _inputActions.Character.View.performed += e => input_View = e.ReadValue<Vector2>();
@@ -209,6 +217,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region - View / Movement -
+    
     private void HandleMovement()
     {
         if (input_Movement.y <= 0.2f)
@@ -254,7 +263,15 @@ public class PlayerController : MonoBehaviour
         movementSpeed.y += _playerGravity;
         movementSpeed += _jumpingForce * Time.deltaTime;
 
+        //_footstepsTimer += Time.deltaTime;
+
         _characterController.Move(movementSpeed);
+                
+        //if(_footstepsTimer >= footstepsInterval && movementSpeed != Vector3.zero)
+        //{
+        //    _footstepsTimer = 0;
+        //    PlayFootsteps();
+        //}
     }
 
     private void HandleSpeedEffectors()
@@ -466,6 +483,22 @@ public class PlayerController : MonoBehaviour
         {
             isSprinting = false;
         }
+    }
+
+    #endregion
+
+    #region - Sounds -
+
+    public void PlaySound(AudioClip audio)
+    {
+        float volume = 1f;
+
+        if (playerStance == PlayerStance.Crouch)
+            volume = 0.5f;
+        else if (playerStance == PlayerStance.Prone)
+            volume = 0.1f;
+
+        _audioSource.PlayOneShot(audio, volume);
     }
 
     #endregion

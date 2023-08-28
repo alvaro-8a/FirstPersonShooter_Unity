@@ -21,7 +21,6 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private WeaponSettingsModel settings;
 
     private PlayerController _characterController;
-    private AudioSource _audioSource;
 
     private bool _isInitialized;
 
@@ -74,6 +73,11 @@ public class WeaponController : MonoBehaviour
 
     private bool _isReadyToShoot;
     private bool _isReloading;
+
+    [Header("Sounds")]
+    [SerializeField] private AudioClip shotSound;
+
+    private AudioSource _audioSource;
 
     // Bug fixing
     public bool canInvoke = true;
@@ -283,7 +287,7 @@ public class WeaponController : MonoBehaviour
         //currentBullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.up * settings.upwardForce, ForceMode.Impulse);
 
         // Shot sound
-        _audioSource.Play();
+        PlayShot();
 
         if (muzzleFlash != null)
         {
@@ -341,6 +345,15 @@ public class WeaponController : MonoBehaviour
     {
         _bulletsLeft = settings.magazineSize;
         _isReloading = false;
+    }
+
+    #endregion
+
+    #region - Sounds -
+
+    private void PlayShot()
+    {
+        _audioSource.PlayOneShot(shotSound);
     }
 
     #endregion
