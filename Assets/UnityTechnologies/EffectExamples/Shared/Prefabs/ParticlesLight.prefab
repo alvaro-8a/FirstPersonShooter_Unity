@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000010154436032}
   - component: {fileID: 108000013609061350}
-  - component: {fileID: 3377873382324266323}
+  - component: {fileID: 4266733880452501377}
   m_Layer: 0
   m_Name: ParticlesLight
   m_TagString: Untagged
@@ -95,7 +95,7 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &3377873382324266323
+--- !u!114 &4266733880452501377
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
