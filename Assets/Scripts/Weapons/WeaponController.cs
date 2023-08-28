@@ -21,6 +21,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private WeaponSettingsModel settings;
 
     private PlayerController _characterController;
+    private AudioSource _audioSource;
 
     private bool _isInitialized;
 
@@ -81,6 +82,8 @@ public class WeaponController : MonoBehaviour
 
     private void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
+
         _bulletsLeft = settings.magazineSize;
         _isReadyToShoot = true;
     }
@@ -268,6 +271,7 @@ public class WeaponController : MonoBehaviour
         // Calculate new direction with spread
         Vector3 directionWithSpread = diretionWithoutSpread + new Vector3(x, y, 0);
 
+        // Instantiate bullet
         var currentBullet = Instantiate(bulletPrefab, bulletSpawn.position, transform.rotation);
         // Rotate bullet to shoot direction
         currentBullet.transform.forward = directionWithSpread.normalized;
@@ -277,6 +281,9 @@ public class WeaponController : MonoBehaviour
 
         // For graneades 
         //currentBullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.up * settings.upwardForce, ForceMode.Impulse);
+
+        // Shot sound
+        _audioSource.Play();
 
         if (muzzleFlash != null)
         {
