@@ -10,12 +10,14 @@ public class WeaponController : MonoBehaviour
     private const string FALLING = "Falling";
     private const string IS_SPRINTING = "IsSprinting";
     private const string WEAPON_ANIMATION_SPEED = "WeaponAnimationSpeed";
+    private const string RECOIL = "Recoil";
 
     [Header("References")]
     [SerializeField] private Animator weaponAnimator;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] private GameObject muzzleFlash;
+    [SerializeField] private ProceduralRecoil proceduralRecoil;
 
     [Header("Settings")]
     [SerializeField] private WeaponSettingsModel settings;
@@ -207,6 +209,11 @@ public class WeaponController : MonoBehaviour
         weaponAnimator.SetFloat(WEAPON_ANIMATION_SPEED, _characterController.weaponAnimationSpeed);
     }
 
+    private void TriggerRecoil()
+    {
+        weaponAnimator.SetTrigger(RECOIL);
+    }
+
     #endregion
 
     #region - Weapon Sway / Breath -
@@ -288,6 +295,7 @@ public class WeaponController : MonoBehaviour
 
         // Shot sound
         PlayShot();
+        proceduralRecoil.Recoil();
 
         if (muzzleFlash != null)
         {

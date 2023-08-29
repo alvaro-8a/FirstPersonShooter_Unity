@@ -161,13 +161,13 @@ public class PlayerController : MonoBehaviour
     {
         if (currentWeapon)
         {
-            currentWeapon.isReloading = false;
+            currentWeapon.isShooting = false;
         }
     }
 
     #endregion
 
-    #region - Shooting -
+    #region - Reload -
 
     private void ReloadPressed()
     {

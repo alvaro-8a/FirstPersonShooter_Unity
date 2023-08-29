@@ -797,6 +797,7 @@ GameObject:
   - component: {fileID: 953034382}
   - component: {fileID: 953034383}
   - component: {fileID: 953034384}
+  - component: {fileID: 953034385}
   m_Layer: 6
   m_Name: Weapon
   m_TagString: Untagged
@@ -838,6 +839,7 @@ MonoBehaviour:
   bulletSpawn: {fileID: 676479657}
   muzzleFlash: {fileID: 7806229830023140176, guid: 65f190dd46d94ba4e861ba7ac22e111b,
     type: 3}
+  proceduralRecoil: {fileID: 953034385}
   settings:
     swayAmount: 4
     swayYInverted: 0
@@ -972,6 +974,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &953034385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953034381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b694df04252fc2a439842062657a47b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 1392153783}
+  recoilX: -2
+  recoilY: 2
+  recoilZ: 5
+  kickBackZ: 0.1
+  snappiness: 5
+  returnAmount: 8
 --- !u!1 &1236995366
 GameObject:
   m_ObjectHideFlags: 0
@@ -1586,7 +1607,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh29208
+  m_Name: pb_Mesh29250
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
