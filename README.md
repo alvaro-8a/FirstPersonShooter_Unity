@@ -13,3 +13,4 @@
 * Breathing settings
 * Speed effectors settings
 * Leaning settings
+* Configurable procedural recoil
