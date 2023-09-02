@@ -360,6 +360,7 @@ public class WeaponController : MonoBehaviour
 
     private void Reload()
     {
+        isShooting = false;
         _isReloading = true;
         _isReadyToShoot = false;
         TriggerReload();
