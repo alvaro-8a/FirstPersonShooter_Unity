@@ -1,16 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using static Models;
 
 public class WeaponController : MonoBehaviour
 {
+    #region - Variables -
+
     private const string JUMP = "Jump";
     private const string LAND = "Land";
     private const string FALLING = "Falling";
     private const string IS_SPRINTING = "IsSprinting";
     private const string WEAPON_ANIMATION_SPEED = "WeaponAnimationSpeed";
-    private const string RECOIL = "Recoil";
+    private const string RELOAD = "Reload";
 
     [Header("References")]
     [SerializeField] private Animator weaponAnimator;
@@ -18,7 +21,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] private GameObject muzzleFlash;
     [SerializeField] private ProceduralRecoil proceduralRecoil;
-
+        
     [Header("Settings")]
     [SerializeField] private WeaponSettingsModel settings;
 
@@ -52,15 +55,15 @@ public class WeaponController : MonoBehaviour
     private float swayTime;
     private Vector3 swayPosition;
 
+    private Vector3 _weaponSwayPosition;
+    private Vector3 _weaponSwayPositionVelocity;
+
     [Header("Sights")]
     [SerializeField] private Transform sightTarget;
     [SerializeField] private float sightOffset;
     [SerializeField] private float aimingInTime;
 
     [HideInInspector] public bool isAimingIn;
-
-    private Vector3 _weaponSwayPosition;
-    private Vector3 _weaponSwayPositionVelocity;
 
     [Header("Shooting")]
     [SerializeField] private List<WeaponFireType> allowedFireTypes;
@@ -78,8 +81,14 @@ public class WeaponController : MonoBehaviour
 
     [Header("Sounds")]
     [SerializeField] private AudioClip shotSound;
+    [SerializeField] private AudioClip reloadSound;
 
     private AudioSource _audioSource;
+
+    [Header("Graphics")]
+    [SerializeField] private TextMeshProUGUI ammunitionDisplay;
+
+    #endregion
 
     // Bug fixing
     public bool canInvoke = true;
@@ -98,13 +107,18 @@ public class WeaponController : MonoBehaviour
     {
         _newWeaponRotation = transform.localRotation.eulerAngles;
 
-        currentFireType = allowedFireTypes.First();
+        //currentFireType = allowedFireTypes.First();
     }
 
     private void Update()
     {
         if (!_isInitialized)
             return;
+
+        if(ammunitionDisplay != null )
+        {
+            ammunitionDisplay.SetText(_bulletsLeft / settings.bulletsPerShot + " | " + settings.magazineSize / settings.bulletsPerShot);
+        }
 
         HandleWeaponRotation();
         SetWeaponAnimations();
@@ -209,9 +223,10 @@ public class WeaponController : MonoBehaviour
         weaponAnimator.SetFloat(WEAPON_ANIMATION_SPEED, _characterController.weaponAnimationSpeed);
     }
 
-    private void TriggerRecoil()
+    private void TriggerReload()
     {
-        weaponAnimator.SetTrigger(RECOIL);
+        Debug.Log("Trigger Reload");
+        weaponAnimator.SetTrigger(RELOAD);
     }
 
     #endregion
@@ -251,6 +266,7 @@ public class WeaponController : MonoBehaviour
 
             if(currentFireType == WeaponFireType.SemiAuto)
             {
+                Debug.Log("SemiAuto");
                 isShooting = false;
             }
         }
@@ -333,7 +349,7 @@ public class WeaponController : MonoBehaviour
     private void HandleReloading()
     {
         // Reload with input
-        if (isReloading && _bulletsLeft < settings.magazineSize)
+        if (isReloading && !_isReloading && _bulletsLeft < settings.magazineSize)
             Reload();
         else
             isReloading = false;
@@ -345,7 +361,10 @@ public class WeaponController : MonoBehaviour
 
     private void Reload()
     {
-        //_isReloading = true;
+        _isReloading = true;
+        _isReadyToShoot = false;
+        TriggerReload();
+        PlayReload();
         Invoke("ReloadFinished", settings.reloadTime);
     }
 
@@ -353,6 +372,8 @@ public class WeaponController : MonoBehaviour
     {
         _bulletsLeft = settings.magazineSize;
         _isReloading = false;
+        _isReadyToShoot = true;
+        isReloading = false;
     }
 
     #endregion
@@ -362,6 +383,17 @@ public class WeaponController : MonoBehaviour
     private void PlayShot()
     {
         _audioSource.PlayOneShot(shotSound);
+    }
+
+    private void PlayReload()
+    {
+        //_audioSource.PlayOneShot(reloadSound);
+    }
+
+    public void PlaySound(AudioClip audio, float volume = 1f)
+    {
+
+        _audioSource.PlayOneShot(audio, volume);
     }
 
     #endregion

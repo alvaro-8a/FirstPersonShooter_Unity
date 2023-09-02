@@ -64,7 +64,7 @@ public class Bullet : MonoBehaviour
     {
         _collisions++;
 
-        Enemy enemy;
+        //Enemy enemy;
 
         if(explodeOnTouch)
         {
@@ -81,6 +81,7 @@ public class Bullet : MonoBehaviour
         if (explosion != null)
         {
             var explosionGO = Instantiate(explosion, transform.position, Quaternion.identity);
+            explosionGO.transform.rotation = Quaternion.Euler(-transform.forward);
             Destroy(explosionGO, 2f);
         }
 
