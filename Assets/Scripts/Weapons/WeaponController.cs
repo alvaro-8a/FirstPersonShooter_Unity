@@ -225,7 +225,6 @@ public class WeaponController : MonoBehaviour
 
     private void TriggerReload()
     {
-        Debug.Log("Trigger Reload");
         weaponAnimator.SetTrigger(RELOAD);
     }
 
