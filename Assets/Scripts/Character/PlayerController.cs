@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static Models;
 
 public class PlayerController : MonoBehaviour
@@ -76,12 +77,7 @@ public class PlayerController : MonoBehaviour
     [Header("Aiming In")]
     [SerializeField] private bool isAimingIn;
 
-    [Header("Sounds")]
-    [SerializeField] private AudioClip footstepsSound;
-    [SerializeField] private float footstepsInterval;
-
     private AudioSource _audioSource;
-    private float _footstepsTimer = 0;
 
     #region - Awake -
 
@@ -136,6 +132,12 @@ public class PlayerController : MonoBehaviour
     {
         SetIsGrounded();
         SetIsFalling();
+
+        // Check if player is Crouching, Proning or Jumping
+        if (playerStance == PlayerStance.Crouch || playerStance == PlayerStance.Prone || !isGrounded)
+        {
+            isSprinting = false;
+        }
 
         HandleMovement();
         HandleView();
@@ -474,6 +476,13 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        // Check if player is Crouching, Proning or Jumping
+        if(playerStance == PlayerStance.Crouch || playerStance == PlayerStance.Prone || !isGrounded)
+        {
+            isSprinting = false;
+            return;
+        }
+
         isSprinting = !isSprinting;
     }
 
@@ -489,14 +498,14 @@ public class PlayerController : MonoBehaviour
 
     #region - Sounds -
 
-    public void PlaySound(AudioClip audio)
+    public void PlaySound(AudioClip audio, float volume = 1f)
     {
-        float volume = 1f;
+        //float volume = 1f;
 
         if (playerStance == PlayerStance.Crouch)
-            volume = 0.5f;
+            volume = volume / 2;
         else if (playerStance == PlayerStance.Prone)
-            volume = 0.1f;
+            volume = volume / 10;
 
         _audioSource.PlayOneShot(audio, volume);
     }
