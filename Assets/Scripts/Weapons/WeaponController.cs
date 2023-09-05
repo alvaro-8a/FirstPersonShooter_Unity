@@ -277,7 +277,8 @@ public class WeaponController : MonoBehaviour
         _isReadyToShoot = false;
 
         // Find exact hit position with raycast
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0));
+        //Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0));
+        Ray ray = new Ray(bulletSpawn.position, bulletSpawn.forward);
         RaycastHit hit;
 
         // Check if ray hits something

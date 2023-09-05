@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        Cursor.visible = false;
         _inputActions = new DefaultInput();
         _characterController = GetComponent<CharacterController>();
         _audioSource = GetComponent<AudioSource>();
