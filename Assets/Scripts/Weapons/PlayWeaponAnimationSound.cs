@@ -15,7 +15,7 @@ public class PlayWeaponAnimationSound : MonoBehaviour
 
     public void PlaySteps()
     {
-        playerController.PlaySound(footstepsSound);
+        playerController.PlaySound(footstepsSound, 1f);
     }
 
     public void PlayWeaponEquip01()

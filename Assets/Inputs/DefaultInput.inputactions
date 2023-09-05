@@ -329,7 +329,7 @@
                 {
                     "name": "",
                     "id": "8edc214a-dd96-49c0-ad74-578798f50ddf",
-                    "path": "<Gamepad>/dpad/left",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
@@ -351,7 +351,7 @@
                 {
                     "name": "",
                     "id": "ea95c714-4f3d-4e4c-a1a4-de5546902eb9",
-                    "path": "<Gamepad>/dpad/right",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
@@ -373,7 +373,7 @@
                 {
                     "name": "",
                     "id": "2dacdab0-49bc-4e5d-97b5-72e16992b353",
-                    "path": "<Gamepad>/dpad/left",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "",
@@ -395,7 +395,7 @@
                 {
                     "name": "",
                     "id": "3a4bc55c-078e-44a0-ae1a-f9d978620275",
-                    "path": "<Gamepad>/dpad/right",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "",
@@ -469,8 +469,30 @@
                 },
                 {
                     "name": "",
+                    "id": "dc30e52c-6a6b-44c3-9dfe-4022b0b812e1",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire2Pressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "dd7504ff-38d1-4d53-8540-98c096a9ecb7",
                     "path": "<Mouse>/rightButton",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire2Released",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "518166c8-2b6c-44c6-a5dc-602b5d72e67d",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "",
@@ -491,8 +513,30 @@
                 },
                 {
                     "name": "",
+                    "id": "12ed6225-e0df-4cf7-8d32-abc870c0fa3b",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire1Pressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "b5b629e6-408c-4ff7-bde1-d0c1d59f91a9",
                     "path": "<Mouse>/leftButton",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire1Released",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d8a3880d-5cb6-4550-8920-8453fa400599",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "",

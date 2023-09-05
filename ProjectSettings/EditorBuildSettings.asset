@@ -6,6 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/StartMenu.unity
+    guid: 670c482ca86b59d4eb55e42353e8b019
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: c3128f447c3abc543813f2677307d245
+  - enabled: 1
+    path: Assets/Scenes/FiringRange.unity
+    guid: fe418bba8f6cebb418fd3f4849812a69
+  - enabled: 1
+    path: Assets/NatureManufacture Assets/Forest Environment Dynamic Nature/Demo
+      Scenes/ForestDemoScene.unity
+    guid: 3c698a3ac77025942a8cd0682cb02889
   m_configObjects: {}
