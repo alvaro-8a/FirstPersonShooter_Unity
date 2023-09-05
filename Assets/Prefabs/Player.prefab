@@ -1477,6 +1477,7 @@ GameObject:
   - component: {fileID: 7348631845429100351}
   - component: {fileID: 7349463321497246843}
   - component: {fileID: 6566653777382139669}
+  - component: {fileID: 4052188594269698970}
   m_Layer: 6
   m_Name: Weapon
   m_TagString: Untagged
@@ -1674,6 +1675,21 @@ MonoBehaviour:
   kickBackZ: 0.1
   snappiness: 5
   returnAmount: 8
+--- !u!114 &4052188594269698970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242529828855350008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbdd59df57504aa4f9eae5bdb3a18c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipProjector: {fileID: 1442275060665197299}
+  checkDistance: 1
+  newDirection: {x: 0, y: -90, z: 0}
 --- !u!1 &1252757954529030414
 GameObject:
   m_ObjectHideFlags: 0
@@ -2051,6 +2067,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1442275060665197299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1080428132160408985}
+  m_Layer: 6
+  m_Name: ClipProjector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1080428132160408985
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442275060665197299}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.232}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 273442582794539944}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1499086588665343730
 GameObject:
   m_ObjectHideFlags: 0
@@ -3278,6 +3325,7 @@ Transform:
   - {fileID: 1970873838505094825}
   - {fileID: 956219398550164322}
   - {fileID: 7236721150780926394}
+  - {fileID: 1080428132160408985}
   m_Father: {fileID: 8241250942137668224}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
