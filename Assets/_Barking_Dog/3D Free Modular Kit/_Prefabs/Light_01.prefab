@@ -44,8 +44,8 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.9510321, g: 0.9622642, b: 0.6309185, a: 1}
-  m_Intensity: 1.5
+  m_Color: {r: 0.99494606, g: 1, b: 0.7877358, a: 1}
+  m_Intensity: 1
   m_Range: 6
   m_SpotAngle: 165
   m_InnerSpotAngle: 159.24054
@@ -149,7 +149,7 @@ Transform:
   - {fileID: 400150}
   - {fileID: 477736}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &175564
 GameObject:

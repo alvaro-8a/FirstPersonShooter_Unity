@@ -8,6 +8,7 @@ public class WeaponController : MonoBehaviour
 {
     #region - Variables -
 
+    // Animation variables
     private const string JUMP = "Jump";
     private const string LAND = "Land";
     private const string FALLING = "Falling";
@@ -71,8 +72,6 @@ public class WeaponController : MonoBehaviour
     [HideInInspector] public bool isShooting;
     [HideInInspector] public bool isReloading;
 
-    private float _currentFireRate;
-    
     private int _bulletsLeft;
     private int _bulletsShot; 
 
@@ -87,6 +86,8 @@ public class WeaponController : MonoBehaviour
 
     [Header("Graphics")]
     [SerializeField] private TextMeshProUGUI ammunitionDisplay;
+
+    public bool isGamePaused = false;
 
     #endregion
 
@@ -120,12 +121,15 @@ public class WeaponController : MonoBehaviour
             ammunitionDisplay.SetText(_bulletsLeft / settings.bulletsPerShot + " | " + settings.magazineSize / settings.bulletsPerShot);
         }
 
-        HandleWeaponRotation();
-        SetWeaponAnimations();
-        HandleWeaponSway();
-        HandleWeaponAimingIn();
-        HandleShooting();
-        HandleReloading();
+        if(!isGamePaused)
+        {
+            HandleWeaponRotation();
+            SetWeaponAnimations();
+            HandleWeaponSway();
+            HandleWeaponAimingIn();
+            HandleShooting();
+            HandleReloading();
+        }
     }
     #endregion
 
@@ -365,7 +369,7 @@ public class WeaponController : MonoBehaviour
         _isReloading = true;
         _isReadyToShoot = false;
         TriggerReload();
-        PlayReload();
+        //PlayReload();
         Invoke("ReloadFinished", settings.reloadTime);
     }
 
@@ -386,11 +390,12 @@ public class WeaponController : MonoBehaviour
         _audioSource.PlayOneShot(shotSound);
     }
 
-    private void PlayReload()
-    {
-        //_audioSource.PlayOneShot(reloadSound);
-    }
+    //private void PlayReload()
+    //{
+    //    _audioSource.PlayOneShot(reloadSound);
+    //}
 
+    // For various reloading sounds
     public void PlaySound(AudioClip audio, float volume = 1f)
     {
 
